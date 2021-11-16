@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express"),
   connectDB = require("./database/Database"),
   cors = require("cors"),
+  fs = require('fs'),
   config = require("./configs/config");
 const accountRoutes = require("./routes/account");
 // const adminRoutes = require("./routes/adminRoutes");
@@ -12,6 +13,13 @@ connectDB();
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
+
+//api doc
+
+app.get('/apidoc', (request, response) => {
+  const stream = fs.createReadStream('./public/apidoc/index.html');
+  response.type('text/html').send(stream);
+});
 
 const corsOptions = {
   origin: "*",

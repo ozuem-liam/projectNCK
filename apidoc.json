@@ -1,0 +1,17 @@
+{
+    "name": "Test NCK Backend API Documentation",
+    "version": "1.0.0",
+    "description": "Restful Api for Raenest User",
+    "title": "Test API doc",
+    "header": {
+      "title": "Overview",
+      "filename": "docs/apidoc/header.md"
+    },
+    "footer": {
+      "filename": "docs/apidoc/footer.md"
+    },
+  
+    "pluginJsonExample": {
+      "json_samples_base_path": "docs/apidoc/definitions/"
+    }
+  }
