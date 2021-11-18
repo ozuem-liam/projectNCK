@@ -52,4 +52,42 @@ const postProduct = async ({
   }
 };
 
-module.exports = { getAllProducts, getProductById, postProduct };
+/**
+ * @description Update product
+ * @param {id} id
+ * @param {array} product_data
+ * @returns
+ */
+const updateProduct = async (product_data) => {
+  const query = { _id: product_data.id },
+    update = { ...product_data },
+    options = { upsert: false, new: true };
+  console.log(query, product_data);
+  const product = await Product.findOneAndUpdate(query, update, options);
+
+  if (product) return { isSuccess: true, data: product };
+
+  let message = messages["PRODUCT-UPDATE-ERROR"];
+  return { isSuccess: false, message };
+};
+
+/**
+ * @description Delete Product
+ * @param {id} id
+ * @returns
+ */
+const deleteProduct = async (id) => {
+  const query = { _id: id },
+    product = await Product.findOneAndRemove(query);
+  if (product) return { isSuccess: true, message: "Deleted Successfully" };
+  let message = messages["PRODUCT-DELETE-ERROR"];
+  return { isSuccess: false, message };
+};
+
+module.exports = {
+  getAllProducts,
+  getProductById,
+  postProduct,
+  updateProduct,
+  deleteProduct,
+};

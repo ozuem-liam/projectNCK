@@ -1,27 +1,46 @@
 const productService = require("../services/productService"),
   { sendSuccess, sendError } = require("./appController"),
+  validator = require("../utils/validation/validator"),
+  HttpStatusCode = require("../models/HttpStatusCode"),
+  productValidationSchemas = require("../utils/validation/schemas/product"),
   upload = require("../configs/multer"),
   cloudinary = require("../configs/cloudinary"),
   multer = require("multer");
 
 // Admin Controller
 
+/**
+ * @api {GET} /Post Product
+ * @apiGroup Products
+ * @apiName GetProduct
+ * @apiUse GetProductRequest
+ * @apiUse GetProductSuccessResponse
+ * @apiUse GetProductErrorResponse
+ * @apiVersion 1.0.0
+ */
 const getAllProducts = async (request, response) => {
   try {
-    const { 
-        isSuccess, 
-        message, 
-        products
-    } = await productService.getAllProducts();
+    const { isSuccess, message, products } =
+      await productService.getAllProducts();
     if (isSuccess) {
-        return sendSuccess({ response, message, data: { products } });
+      return sendSuccess({ response, message, data: { products } });
     }
   } catch (error) {
-      console.log(error)
+    console.log(error);
     return sendError({ response, error, message: error });
   }
 };
 
+/**
+ * @api {GET} /Post Product
+ * @apiGroup Product
+ * @param {id} id
+ * @apiName GetOneProduct
+ * @apiUse GetOneProductRequest
+ * @apiUse GetOneProductSuccessResponse
+ * @apiUse GetOneProductErrorResponse
+ * @apiVersion 1.0.0
+ */
 const getProductById = async (request, response) => {
   try {
     let id = request.params.id;
@@ -80,4 +99,54 @@ const postProduct = async (request, response) => {
   });
 };
 
-module.exports = { getAllProducts, getProductById, postProduct };
+/**
+ * @api {PATCH} /product/{id} Update Product
+ * @apiName Update Product
+ * @apiGroup Products
+ * @apiUse UpdateProductRequest
+ * @apiUse UpdateProductSuccessResponse
+ * @apiUse UpdateProductErrorResponse
+ * @apiVersion 1.0.0
+ */
+const updateProduct = async (request, response) => {
+  const { errors, data: product_data } = validator.validate(
+    productValidationSchemas.createProductSchema,
+    request.body
+  );
+  if (errors) {
+    return sendError({ response, errors });
+  }
+  const { isSuccess, data, message } = await productService.updateProduct(
+    product_data
+  );
+  if (isSuccess) {
+    return sendSuccess({ response, data });
+  }
+  return sendError({ response, message, code: HttpStatusCode.SERVER_ERROR });
+};
+
+/**
+ * @api {DELETE} /delete/{id} Delete Product
+ * @apiName Delete Product
+ * @apiGroup Products
+ * @apiUse DeleteProductRequest
+ * @apiUse DeleteProductSuccessResponse
+ * @apiUse DeleteProductErrorResponse
+ * @apiVersion 1.0.0
+ */
+const deletePoduct = async (request, response) => {
+  const { id } = request.params;
+  const { isSuccess, message } = await productService.deleteProduct(id);
+  if (isSuccess) {
+    return sendSuccess({ response, message });
+  }
+  return sendError({ response, message, code: HttpStatusCode.SERVER_ERROR });
+};
+
+module.exports = {
+  getAllProducts,
+  getProductById,
+  postProduct,
+  updateProduct,
+  deletePoduct,
+};

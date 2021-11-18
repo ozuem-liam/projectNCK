@@ -48,7 +48,7 @@ const loginUser = async (request, response) => {
 };
 
 /**
- * @api {PATCH} /accounts Register
+ * @api {POST} /accounts Register
  * @apiGroup Accounts
  * @apiName Register
  * @apiUse RegisterRequest

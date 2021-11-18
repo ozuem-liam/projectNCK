@@ -23,10 +23,11 @@
     "TOKEN-REQUIRED": "token-required",
     "PROFILE-UPDATE-ERROR": "profile-update-error",
     "ADDRESS-UPDATE-ERROR": "address-update-error",
-    "NOTIFICATION-UPDATE-ERROR": "notification-update-error",
-    "NOTIFICATION-DELETE-ERROR": "notification-delete-error",
     "NO-ACCOUNT-FOUND": "no-account-found",
-    "NO-NOTIFICATION-FOUND": "no-notification-found",
+    "COUNT-IN-STOCK-REQUIRED": "count-in-stock-required",
+    "PRODUCT-NAME-REQUIRED": "product-name-required",
+    "PRODUCT-PRICE-REQUIRED": "product-price-required",
+    "PRODUCT-DESCRIPTION-REQUIRED": "product-description-required",
     "ACT-PHONE-NUMBER-REQUIRED": "account-phone-number-required",
     "ACT-TIMEZONE-REQUIRED": "account-timezone-required",
     "ACT-CITIZENSHIP-REQUIRED": "account-citizenship-required",
@@ -38,9 +39,7 @@
     "ADDRESS-CITY-REQUIRED": "address-city-required",
     "ADDRESS-POSTAL-CODE-REQUIRED": "address-postal-code-required",
     "ADDRESS-TYPE-REQUIRED": "address-type-required",
-    "ADD-NOTIFICATION-ERROR": "add-notification-error",
-    "NOTIFICATION-SUBJECT-REQUIRED": "notification-subject-required",
-    "NOTIFICATION-CONTENT-REQUIRED": "notification-content-required",
-    "NOTIFICATION-DESTINATION-REQUIRED": "notification-destination-required"
+    "PRODUCT-DELETE-ERROR": "productt-delete-error",
+    "PRODUCT-UPDATE-ERROR": "product-update-error"
   }
   
