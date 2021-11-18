@@ -4,7 +4,7 @@ const { order } = require("../controllers");
 
 router.get("/", verifyToken, order.getAllProducts);
 router.get("/:id", verifyToken, order.getProductDetail);
-router.post("/order", verifyToken, order.addToCart);
+router.post("/order", order.addToCart);
 router.delete("/order/:id", verifyToken, order.removeFromCart);
 
 module.exports = router;

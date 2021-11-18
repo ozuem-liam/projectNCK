@@ -7,7 +7,7 @@ const getAllProducts = async () => {
     const products = await Product.find();
     return { isSuccess: true, message: "success", products };
   } catch (error) {
-    return { isSuccess: false, messgae: "Server Error", error: error };
+    return { isSuccess: false, message: "Server Error", error: error };
   }
 };
 
@@ -16,26 +16,31 @@ const getProductDetail = async ({ id }) => {
     const product = await Product.findById(id);
     return { isSuccess: true, message: "success", product };
   } catch (error) {
-    return { isSuccess: false, messgae: "Server Error", error: error };
+    return { isSuccess: false, message: "Server Error", error: error };
   }
 };
 
 const addToCart = async ({ id }) => {
   try {
     const addedProduct = await Product.findById(id);
-    Cart.save(addedProduct);
-    let savedAddedProduct = Cart.getCart();
-    addedProduct.countInStock--;
-    addedProduct.save();
-    return { isSuccess: true, message: "success", savedAddedProduct };
+    const qty = addedProduct.countInStock;
+    if (qty > 0) {
+      Cart.save(addedProduct);
+      let savedAddedProduct = Cart.getCart();
+      addedProduct.countInStock--;
+      addedProduct.save();
+      return { isSuccess: true, message: "success", savedAddedProduct };
+    } else {
+      return { isSuccess: false, message: "Product not in Stock" };
+    }
   } catch (error) {
-    return { isSuccess: false, messgae: "Server Error", error: error };
+    return { isSuccess: false, message: "Server Error", error: error };
   }
 };
 
 const removeFromCart = async ({ id }) => {
   try {
-      const cartStatus = Cart.getCart();
+    const cartStatus = Cart.getCart();
     if (cartStatus !== null) {
       const product = await Cart.getCart(id);
       product.totalPrice = Cart.getCart().totalPrice - product.totalPrice;
