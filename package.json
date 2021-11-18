@@ -4,11 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "heroku-postbuild": "cd frontend && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client \"",
     "docs": "apidoc -i ./controllers -i ./docs/apidoc/definitions -o public/apidoc",
     "data:import": "node seederScript.js",
     "test": "mocha 'tests/**/*.spec.js' --watch"
