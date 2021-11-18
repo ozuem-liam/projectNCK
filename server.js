@@ -23,6 +23,9 @@ app.get("/apidoc", (request, response) => {
   response.type("text/html").send(stream);
 });
 
+app.get("/", (request, response) => {
+  response.send("WELCOME TO NCK API");
+})
 const corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200,
@@ -36,7 +39,6 @@ app.use(cors(corsOptions));
 app.use("/account", accountRoutes);
 app.use("/api/product", productRoutes);
 app.use("/product", orderRoutes);
-// app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 
