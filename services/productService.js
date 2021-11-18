@@ -53,12 +53,6 @@ const postProduct = async ({
   }
 };
 
-/**
- * @description Update product
- * @param {id} id
- * @param {array} product_data
- * @returns
- */
 const updateProduct = async (product_data) => {
   const query = { _id: product_data.id },
     update = { ...product_data },
@@ -72,11 +66,7 @@ const updateProduct = async (product_data) => {
   return { isSuccess: false, message };
 };
 
-/**
- * @description Delete Product
- * @param {id} id
- * @returns
- */
+
 const deleteProduct = async (id) => {
   try {
     let product = await Product.findById(id);

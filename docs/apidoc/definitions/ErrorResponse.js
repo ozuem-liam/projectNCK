@@ -26,29 +26,6 @@
 }
  */
 
-/**
- * @apiDefine GetProfileByUserIdErrorResponse
- * @apiName Get Profile By User Id
- * @apiSuccessExample {json} Error
- * 400 Bad Request
-{
-    "data": {},
-    "errors": {},
-    "message": "USER-NOT-FOUND"
-}
- */
-
-/**
- * @apiDefine GetProfileByUserEmailErrorResponse
- * @apiName Get Profile By User Email
- * @apiSuccessExample {json} Error
- * 400 Bad Request
-{
-    "data": {},
-    "errors": {},
-    "message": "USER-NOT-FOUND"
-}
-*/
 
 /**
  * @apiDefine GetAllAccountsWithTypeErrorResponse
@@ -62,41 +39,6 @@
 }
 */
 
-/**
- * @apiDefine UpdateUserProfileErrorResponse
- * @apiName Update User Profile
- * @apiSuccessExample {json} Error
- * 400 Bad Request
-{
-    "data": {},
-    "errors": {},
-    "message": "PROFILE-UPDATE-ERROR"
-}
-*/
-
-/**
- * @apiDefine AddUserAddressErrorResponse
- * @apiName Add User Address
- * @apiSuccessExample {json} Error
- * 400 Bad Request
-{
-    "data": {},
-    "errors": {},
-    "message": "ADD-ADDRESS-ERROR"
-}
-*/
-
-/**
- * @apiDefine UpdateUserAddressErrorResponse
- * @apiName Update User Address
- * @apiSuccessExample {json} Error
- * 400 Bad Request
-{
-    "data": {},
-    "errors": {},
-    "message": "ADDRESS-UPDATE-ERROR"
-}
-*/
 
 
 
