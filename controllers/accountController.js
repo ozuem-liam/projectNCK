@@ -1,10 +1,13 @@
-const accountService = require('../services/accountService'),
-  validator = require('../utils/validation/validator'),
-  validationSchema = require('../utils/validation/schemas/account'),
-  { sendSuccess, sendError } = require('./appController'),
-  HttpStatusCode = require('../models/HttpStatusCode'),
-  config = require('../configs/config');
-const { registrationSchemaTwo } = require('../utils/validation/schemas/account');
+const accountService = require("../services/accountService"),
+  validator = require("../utils/validation/validator"),
+  validationSchema = require("../utils/validation/schemas/account"),
+  { sendSuccess, sendError } = require("./appController"),
+  { encrypt } = require("../utils/encryption"),
+  config = require("../configs/config");
+const jwt = require("jsonwebtoken");
+const {
+  registrationSchemaTwo,
+} = require("../utils/validation/schemas/account");
 
 /**
  * @api {PATCH} /accounts Login
@@ -16,7 +19,10 @@ const { registrationSchemaTwo } = require('../utils/validation/schemas/account')
  * @apiVersion 1.0.0
  */
 const loginUser = async (request, response) => {
-  const { errors, data } = validator.validate(validationSchema.loginSchema, request.body);
+  const { errors, data } = validator.validate(
+    validationSchema.loginSchema,
+    request.body
+  );
   if (errors) {
     return sendError({ response, errors });
   }
@@ -24,20 +30,20 @@ const loginUser = async (request, response) => {
     isSuccess,
     message,
     account = {},
-    destination = '',
+    destination = "",
     accessToken,
   } = await accountService.loginUser(data);
   if (isSuccess) {
-    if (destination == 'dashboard') {
-      response.set({
-          Authorization: "Bearer " + accessToken,
-          "Access-Control-Expose-Headers": "authorization",
-        })
+    // response.header("authorization", accessToken);
+    if (destination == "dashboard") {
+      loginSetUp({ response, account });
     }
-
-    return sendSuccess({ response, message, data: { account, destination, accessToken } });
+    return sendSuccess({
+      response,
+      message,
+      data: { account, destination, accessToken },
+    });
   }
-
   return sendError({ response, message });
 };
 
@@ -63,13 +69,13 @@ const createAccount = async (request, response) => {
     isSuccess,
     message,
     account = {},
-    destination = '',
+    destination = "",
   } = await accountService.createAccount(data);
   if (isSuccess) {
-    return sendSuccess({ 
-      response, 
-      message, 
-      data: { destination, account } 
+    return sendSuccess({
+      response,
+      message,
+      data: { destination, account },
     });
   }
   return sendError({ response, message });
@@ -80,29 +86,6 @@ const loginSetUp = ({ response, account }) => {
   //Generate auth token and save to cookie
   const authToken = encrypt(JSON.stringify({ id, email, membership_type }));
   return (response.cookie = (config.authName, authToken));
-};
-
-/**
- * @api {PATCH} /accounts Send Email Token
- * @apiName Send Email Token
- * @apiGroup Accounts
- * @apiUse SendEmailRequest
- * @apiUse SendEmailSuccessResponse
- * @apiVersion 1.0.0
- */
-const sendVerificationToken = async (request, response) => {
-  const { errors, data } = validator.validate(
-    validationSchema.emailConfirmationSchema,
-    request.body
-  );
-  if (errors) {
-    return sendError({ response, errors });
-  }
-  const { isSuccess, message = '' } = await accountService.sendVerificationToken({ ...data });
-  if (isSuccess) {
-    return sendSuccess({ response });
-  }
-  return sendError({ response, code: HttpStatusCode.SERVER_ERROR });
 };
 
 /**
@@ -127,16 +110,19 @@ const logoutUser = async (request, response) => {
  * @apiVersion 1.0.0
  */
 const resetPassword = async (request, response) => {
-  const { errors, data } = validator.validate(validationSchema.resetPasswordSchema, request.body);
+  const { errors, data } = validator.validate(
+    validationSchema.resetPasswordSchema,
+    request.body
+  );
   if (errors) {
     return sendError({ response, errors });
   }
 
-  const { isSuccess, message = '' } = await accountService.resetPassword(data);
+  const { isSuccess, message = "" } = await accountService.resetPassword(data);
   if (isSuccess) {
     return sendSuccess({ response });
   }
   return sendError({ response, message });
 };
 
-module.exports = { loginUser, createAccount, sendVerificationToken, resetPassword, logoutUser };
+module.exports = { loginUser, createAccount, resetPassword, logoutUser };

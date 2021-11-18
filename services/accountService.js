@@ -5,12 +5,13 @@ const { Account } = require('../database/models/Account'),
   EMAIL_CONFIRM = 'EmailConfirmation',
   PASSWORD_RESET = 'PasswordReset';
 
-const loginUser = async ({ email, password, two_fa_code = '' }) => {
+const loginUser = async ({ email, password }) => {
   const account = await Account.findOne({ email });
   if (account) {
     if (await account.isAMatchPassword(password)) {
       // sign a token
-      const { accessToken } = jwtTokens(email);
+      const id = account._id;
+      const { accessToken } = jwtTokens(id);
       let destination = 'dashboard',
         message = messages['ACT-LOGIN-SUCCESS'],
         isSuccess = true;

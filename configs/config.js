@@ -9,7 +9,7 @@ const config = {
     development: process.env.DEVELOPMENT,
   
     appKey: process.env.APP_KEY,
-    authName: 'rnlekdn',
+    authName: 'test',
     tokenLife: 1,
   };
   

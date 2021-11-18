@@ -81,18 +81,6 @@ const accountSchemas = {
     }),
   }),
 
-  emailConfirmationSchema: Joi.object().keys({
-    type: Joi.string().required().valid('PasswordReset', 'EmailConfirmation').label('Type'),
-    email: emailSchema.when('type', {
-      is: 'PasswordReset',
-      then: Joi.required(),
-      otherwise: Joi.forbidden(),
-    }),
-    id: Joi.string()
-      .alphanum()
-      .when('type', { is: 'EmailConfirmation', then: Joi.required(), otherwise: Joi.forbidden() }),
-  }),
-
   validateOptions: {
     abortEarly: false,
     stripUnknown: true,

@@ -39,7 +39,7 @@ const account = {
   membership_type: {
     type: [String],
     enum: ['Customer', 'Admin'],
-    default: 'Admin',
+    default: 'Customer',
   },
   last_login: {
     type: Date,
