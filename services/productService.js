@@ -1,5 +1,6 @@
 const { Product } = require("../database/models/Product"),
   messages = require("../translation/message.json"),
+  cloudinary = require("../configs/cloudinary"),
   config = require("../configs/config");
 
 const getAllProducts = async () => {
@@ -77,11 +78,15 @@ const updateProduct = async (product_data) => {
  * @returns
  */
 const deleteProduct = async (id) => {
-  const query = { _id: id },
-    product = await Product.findOneAndRemove(query);
-  if (product) return { isSuccess: true, message: "Deleted Successfully" };
-  let message = messages["PRODUCT-DELETE-ERROR"];
-  return { isSuccess: false, message };
+  try {
+    let product = await Product.findById(id);
+    await cloudinary.uploader.destroy(product.cloudinary_id);
+    await product.remove();
+    return { isSuccess: true, message: "Deleted Successfully" };
+  } catch (error) {
+    let message = messages["PRODUCT-DELETE-ERROR"];
+    return { isSuccess: false, message };
+  }
 };
 
 module.exports = {

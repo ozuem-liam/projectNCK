@@ -85,33 +85,4 @@ const formatAccountResponse = (account) => {
   };
 };
 
-// const resetPassword = async ({ email, password, stage, token }) => {
-//   const account = await Account.findOne({ email });
-
-//   if (verifyToken({ token, email_token: account.email_token })) {
-//     if (stage == 1) {
-//       return { isSuccess: true };
-//     } else {
-//       account.password = await Account.hashPassword(password);
-//       account.email_token = { token: 0, createdAt: dayjs().format() };
-//       await account.save();
-//       //send password reset email
-//       const to = [{ email }],
-//         dynamic_data = {
-//           first_name: account.first_name,
-//           last_name: account.last_name,
-//         };
-//       const { isSuccess } = await sendEmail({
-//         to,
-//         dynamic_data,
-//         template_id: config.sendGrid.templates.PasswordResetSuccess,
-//       });
-//       const message = messages['ACT-PASSWORD-RESET-SUCCESS'];
-//       return { isSuccess };
-//     }
-//   }
-
-//   return { isSuccess: false, message: messages['WRONG-CONFIRM-CODE'] };
-// };
-
 module.exports = { loginUser, createAccount };
