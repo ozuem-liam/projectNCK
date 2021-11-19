@@ -26,6 +26,7 @@ app.get("/apidoc", (request, response) => {
 app.get("/", (request, response) => {
   response.send("WELCOME TO NCK API");
 })
+
 const corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200,
