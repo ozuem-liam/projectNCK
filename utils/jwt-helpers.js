@@ -10,4 +10,4 @@ function jwtTokens(id) {
   return { accessToken };
 }
 
-module.exports = {jwtTokens}
+module.exports = { jwtTokens }

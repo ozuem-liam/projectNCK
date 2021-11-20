@@ -11,7 +11,6 @@ const getAllProducts = async (request, response) => {
       return sendSuccess({ response, message, data: { products } });
     }
   } catch (error) {
-    console.log(error);
     return sendError({ response, error, message: error });
   }
 };
@@ -26,7 +25,6 @@ const getProductDetail = async (request, response) => {
       return sendSuccess({ response, message, data: { product } });
     }
   } catch (error) {
-    console.log(error);
     return sendError({ response, error, message: error });
   }
 };

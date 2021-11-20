@@ -57,7 +57,6 @@ const updateProduct = async (product_data) => {
   const query = { _id: product_data.id },
     update = { ...product_data },
     options = { upsert: false, new: true };
-  console.log(query, product_data);
   const product = await Product.findOneAndUpdate(query, update, options);
 
   if (product) return { isSuccess: true, data: product };
